@@ -1,9 +1,9 @@
 # MAkefile for tutorials from
 # http://www.jamesmolloy.co.uk/tutorial_html/1.-Environment%20setup.html
 
-SOURCES=boot.o
+SOURCES=boot.o main.o
 
-CFLAGS=
+CFLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
 LDFLAGS=-melf_i386 -Tlink.ld
 ASFLAGS=-felf
 
