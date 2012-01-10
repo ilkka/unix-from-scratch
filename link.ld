@@ -2,6 +2,7 @@
  * http://www.jamesmolloy.co.uk/tutorial_html/1.-Environment%20setup.html
  */
 
+OUTPUT_FORMAT(elf32-i386)
 ENTRY(start) /* start location for binary is 'start' */
 SECTIONS
 {

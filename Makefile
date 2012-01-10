@@ -4,7 +4,7 @@
 SOURCES=boot.o
 
 CFLAGS=
-LDFLAGS=-Tlink.ld
+LDFLAGS=-melf_i386 -Tlink.ld
 ASFLAGS=-felf
 
 all: $(SOURCES) link
