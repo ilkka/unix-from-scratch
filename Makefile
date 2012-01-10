@@ -3,7 +3,9 @@
 
 OBJS=obj/boot.o \
      obj/main.o \
-     obj/common.o
+     obj/common.o \
+     obj/monitor.o
+
 KERNEL=bin/kernel
 
 CFLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
