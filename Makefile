@@ -1,19 +1,31 @@
 # MAkefile for tutorials from
 # http://www.jamesmolloy.co.uk/tutorial_html/1.-Environment%20setup.html
 
-SOURCES=boot.o main.o
+OBJS=obj/boot.o \
+     obj/main.o
+KERNEL=bin/kernel
 
 CFLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
 LDFLAGS=-melf_i386 -Tlink.ld
 ASFLAGS=-felf
 
-all: $(SOURCES) link
+all: obj $(OBJS) link
+
+obj:
+	-mkdir obj
 
 clean:
-	-rm *.o kernel
+	-rm *.o $(KERNEL)
 
-link:
-	ld $(LDFLAGS) -o kernel $(SOURCES)
+link: bin
+	ld $(LDFLAGS) -o $(KERNEL) $(OBJS)
 
-%.o: %.s
+bin:
+	-mkdir bin
+
+obj/%.o: src/%.s
 	nasm $(ASFLAGS) $<
+	mv $(patsubst %.s,%.o,$<) $@
+
+obj/%.o: src/%.c
+	gcc $(CFLAGS) -o $@ -c $<
