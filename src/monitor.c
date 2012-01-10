@@ -4,7 +4,7 @@
 #include "monitor.h"
 #include "common.h"
 
-static u8int *video_memory = 0xB8000;
+static u16int *video_memory = (u16int*)0xB8000;
 
 static u16int cursor_x = 0, cursor_y = 0;
 
@@ -109,7 +109,7 @@ void monitor_put(char c)
 	move_cursor();
 }
 
-void monitor_clear();
+void monitor_clear()
 {
 	u8int bgColor = 0;
 	u8int fgColor = 15;
