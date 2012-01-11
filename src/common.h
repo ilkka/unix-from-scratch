@@ -37,25 +37,30 @@ u8int inb(u16int port);
  */
 u16int inw(u16int port);
 
-/**
- * Fill area of memory with constant byte.
+/**************************************************************************
+ * Variable length argument list support macros
  *
- * @param s pointer to filled memory.
- * @param c byte to write.
- * @param n number of bytes to write.
- * @return pointer to s.
- */
-void *memset(void *s, u8int c, u32int n);
+ * These are more or less pilfered from Linux 0.11 include/stdarg.h and are
+ * Copyright Linux Torvalds. They are used in accordance with Linux's
+ * licence at the time, which stated that redistribution in whole or part
+ * is allowed as long as full source is made available and no fees are
+ * charged.
+ **************************************************************************/
+
+typedef char *va_list;
 
 /**
- * Copy memory from one area to another.
- *
- * @param dest pointer to destination.
- * @param src pointer to source.
- * @param n number of bytes to copy.
- * @return pointer to dest.
+ * Round the size of expression TYPE to next multiple of sizeof(int).
  */
-void *memcpy(void *dest, void *src, u32int n);
+#define __va_rounded_size(TYPE) \
+    (((sizeof(TYPE) + sizeof(int)-1) / sizeof(int)) * sizeof(int))
+
+/**
+ * Get next arg as type TYPE and advance the pointer
+ */
+#define va_arg(AP, TYPE) \
+    (AP += __va_rounded_size(TYPE), \
+     *(TYPE*)(AP - __va_rounded_size(TYPE)))
 
 #endif // COMMON_H
 
