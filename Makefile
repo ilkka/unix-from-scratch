@@ -4,7 +4,9 @@
 OBJS=obj/boot.o \
      obj/main.o \
      obj/common.o \
-     obj/monitor.o
+     obj/monitor.o \
+     obj/string.o \
+     obj/printf.o
 
 KERNEL=bin/kernel
 
