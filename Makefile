@@ -14,7 +14,13 @@ CFLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector
 LDFLAGS=-melf_i386 -Tlink.ld
 ASFLAGS=-felf
 
-all: obj $(OBJS) link
+all: link image run
+
+image: link
+	./update_image.sh
+
+run: image
+	./run_bochs.sh
 
 obj:
 	-mkdir obj
@@ -22,7 +28,7 @@ obj:
 clean:
 	-rm *.o $(KERNEL)
 
-link: bin
+link: obj $(OBJS) bin
 	ld $(LDFLAGS) -o $(KERNEL) $(OBJS)
 
 bin:
