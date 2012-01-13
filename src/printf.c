@@ -9,6 +9,7 @@
 #include "common.h"
 #include "printf.h"
 #include "string.h"
+#include "monitor.h"
 
 // Output flags definitions
 #define LEFT (1 << 0)
@@ -137,7 +138,7 @@ static char *number(char *str, int num, int base, int size, int precision,
 	return str;
 }
 
-int vsprintf(char *buf, const char *fmt, va_list args)
+int sprintf(char *buf, const char *fmt, va_list args)
 {
 	char *str;	// for keeping track of output location in buf
 	int flags;	// for keeping track of formatting flags
@@ -267,4 +268,11 @@ repeat: // an elegant use of goto if I've ever seen one
 	}
 	*str = '\0';
 	return str-buf; // str is now at end of output buffer
+}
+
+void printf(const char *fmt, va_list args)
+{
+	static char buf[4096];
+	sprintf(buf, fmt, args);
+	monitor_write(buf);
 }
