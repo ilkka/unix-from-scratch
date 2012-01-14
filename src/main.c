@@ -1,8 +1,7 @@
 int main(struct multiboot *mbootptr)
 {
 	monitor_clear();
-	monitor_write("before printf");
-	printf("Hello %s!", "world");
-	monitor_write("after printf");
+	printf("Hello %s!\n", "world");
+	printf("Hello %d\n", 42);
 	return 0xDEADBABA;
 }
