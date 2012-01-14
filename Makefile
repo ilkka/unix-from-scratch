@@ -11,7 +11,8 @@ C_SRC = src/main.c \
 	src/string.c \
 	src/printf.c \
 	src/monitor.c \
-	src/descriptor_tables.c
+	src/descriptor_tables.c \
+	src/isr.c
 
 KERNEL=bin/kernel
 
