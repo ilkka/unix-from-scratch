@@ -56,11 +56,17 @@ typedef char *va_list;
     (((sizeof(TYPE) + sizeof(int)-1) / sizeof(int)) * sizeof(int))
 
 /**
+ * Define AP to point at the first variable arg
+ */
+#define va_start(AP, LASTARG) \
+     AP = ((char *) &(LASTARG) + __va_rounded_size(LASTARG))
+
+/**
  * Get next arg as type TYPE and advance the pointer
  */
 #define va_arg(AP, TYPE) \
     (AP += __va_rounded_size(TYPE), \
-     *(TYPE*)(AP - __va_rounded_size(TYPE)))
+     *((TYPE*)(AP - __va_rounded_size(TYPE))))
 
 #endif // COMMON_H
 
