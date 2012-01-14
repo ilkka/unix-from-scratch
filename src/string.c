@@ -40,10 +40,19 @@ void *memcpy(void *dest, void *src, u32int n)
 	return dest;
 }
 
-u32int strlen(const char* s)
+int strlen(const char* s)
 {
-	u32int len = 0;
-	while (*s++ != 0)
-		++len;
+	int len = 0;
+	asm(
+			"cld;"	// clear DF: strings iterd from lo to hi addr
+			"repne;" // repeat while not equal (zf != 1)
+			"scasb;" // with above, find AL in string at ES:DI
+			"notl %[len];" // one's complement?
+			"decl %[len]"
+			: [len] "=c" (len) // length is set in CX
+			: "D" (s), // put string addr into DI
+			  "a" (0), // init AL to zero
+			  "0" (0xffffffff) // start length at int_min
+	   );
 	return len;
 }

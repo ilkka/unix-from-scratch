@@ -30,7 +30,7 @@ void *memcpy(void *dest, void *src, u32int n);
  * @param s the string.
  * @return length as 32-bit unsigned integer.
  */
-u32int strlen(const char* s);
+int strlen(const char* s);
 
 #endif // STRING_H
 
