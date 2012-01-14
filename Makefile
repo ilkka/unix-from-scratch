@@ -3,7 +3,8 @@
 
 ASM_SRC = src/boot.s \
 	  src/gdt.s \
-	  src/idt.s
+	  src/idt.s \
+	  src/interrupt.s
 
 C_SRC = src/main.c \
 	src/common.c \
