@@ -224,15 +224,17 @@ repeat: // an elegant use of goto if I've ever seen one
 					len = precision;
 				// left-pad
 				if (!(flags & LEFT)) {
-					while (len < field_width--)
+					while (len < field_width--) {
 						*str++ = ' ';
+					}
 				}
 				for (i = 0; i < len; ++i) {
 					*str++ = *s++;	// output!
 				}
 				// right-pad
-				while (len < field_width--)
+				while (len < field_width--) {
 					*str++ = ' ';
+				}
 				break;
 			case 'o': // octal
 				str = number(str, va_arg(args, u32int),
@@ -252,6 +254,13 @@ repeat: // an elegant use of goto if I've ever seen one
 				str = number(str, va_arg(args, u32int),
 						16, field_width, precision, flags);
 				break;
+			case 'd':
+			case 'i':
+				flags |= SIGN;
+			case 'u':
+				str = number(str, va_arg(args, unsigned long), 10,
+						field_width, precision, flags);
+				break;
 			case 'n': // actually no idea what this is :--D
 				ip = va_arg(args, int*);
 				*ip = (str - buf);
@@ -270,8 +279,10 @@ repeat: // an elegant use of goto if I've ever seen one
 	return str-buf; // str is now at end of output buffer
 }
 
-void printf(const char *fmt, va_list args)
+void printf(const char *fmt, ...)
 {
+	va_list args;
+	va_start(args, fmt);
 	static char buf[4096];
 	sprintf(buf, fmt, args);
 	monitor_write(buf);

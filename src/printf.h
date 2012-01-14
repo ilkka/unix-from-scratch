@@ -17,8 +17,7 @@ int sprintf(char *buf, const char *fmt, va_list args);
  * Formatted output to screen.
  *
  * @param fmt the format string.
- * @param args arguments for format string.
  */
-void printf(const char *fmt, va_list args);
+void printf(const char *fmt, ...);
 
 #endif // PRINTF_H
